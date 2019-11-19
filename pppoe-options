@@ -1,0 +1,64 @@
+# Copyright 2019-present Open Networking Foundation
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# Originally created by Jim Knoble <jmknoble@mercury.interpath.net>
+# Modified for Debian by alvar Bray <alvar@meiko.co.uk>
+# Modified for PPP Server setup by Christoph Lameter <clameter@debian.org>
+# Modified for SEBA in a Box by Open Networking Foundation
+
+# To quickly see what options are active in this file, use this command:
+#   egrep -v '#|^ *$' /etc/ppp/pppoe-options
+
+# Use the modem control lines.  On Ultrix, this option implies hardware
+# flow control, as for the crtscts option.  (This option is not fully
+# implemented.)
+modem
+
+# If this option is given, pppd will send an LCP echo-request frame to the
+# peer every n seconds. Normally the peer should respond to the echo-request
+# by sending an echo-reply. This option can be used with the
+# lcp-echo-failure option to detect that the peer is no longer connected.
+lcp-echo-interval 5
+
+# If this option is given, pppd will presume the peer to be dead if n
+# LCP echo-requests are sent without receiving a valid LCP echo-reply.
+# If this happens, pppd will terminate the connection.  Use of this
+# option requires a non-zero value for the lcp-echo-interval parameter.
+# This option can be used to enable pppd to terminate after the physical
+# connection has been broken (e.g., the modem has hung up) in
+# situations where no hardware modem control lines are available.
+lcp-echo-failure 12
+
+# Disable the IPXCP and IPX protocols.
+noipx
+
+# Disable negotiation of Van Jacobson style IP header compression (use
+# default, i.e. no compression).
+-vj
+
+# Specify which DNS Servers the incoming Win95 or WinNT Connection should use
+# Two Servers can be remotely configured
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+
+# Set the interface netmask to <n>, a 32 bit netmask in "decimal dot"
+# notation (e.g. 255.255.255.0).
+netmask 255.255.255.0
+
+# Other options
+asyncmap 0
+crtscts
+lock
+hide-password
+require-chap
+nobsdcomp
+noccp
+novj
+
+# Increase debugging level (same as -d).  If this option is given, pppd
+# will log the contents of all control packets sent or received in a
+# readable form.  The packets are logged through syslog with facility
+# daemon and level debug.
+debug
+logfile /var/log/pppoe-server-log
